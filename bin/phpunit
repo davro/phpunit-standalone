@@ -1,0 +1,37 @@
+#!/usr/bin/env php
+<?php
+/**
+ * PHPUnit standalone
+ * Setup the include paths for phpunit to work without "Pear"
+ *
+ * @author      David Stevens
+ * @license     http://www.gnu.org/licenses/lgpl.html   LGPL
+ */
+
+define('PHPUnit_MAIN_METHOD', 'PHPUnit_TextUI_Command::main');
+
+if (strpos('@php_bin@', '@php_bin') === 0) {
+
+	$library=dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.
+                'lib'.DIRECTORY_SEPARATOR;
+	
+	$libraries=array(
+		$library.'dbunit',
+		$library.'phpunit',
+		$library.'php-code-coverage',
+		$library.'php-file-iterator',
+		$library.'php-invoker',
+		$library.'php-text-template', 
+		$library.'php-timer',
+		$library.'php-token-stream',
+		$library.'phpunit-mock-objects', 
+		$library.'phpunit-selenium',
+		$library.'phpunit-story'
+	);
+
+	set_include_path(implode(PATH_SEPARATOR, $libraries) . get_include_path());
+}
+
+require 'PHPUnit'.DIRECTORY_SEPARATOR.'Autoload.php';
+
+PHPUnit_TextUI_Command::main();
